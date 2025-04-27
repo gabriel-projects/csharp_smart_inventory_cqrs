@@ -1,0 +1,1 @@
+# csharp_smart_inventory_cqrs
