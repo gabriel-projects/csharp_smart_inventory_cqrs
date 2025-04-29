@@ -24,19 +24,9 @@ namespace Api.GRRInnovations.SmartInventory.Application.Services
             return await _productRepository.CreateAsync(dto);
         }
 
-        public async Task<List<IProductModel>> BulkInsertProductsAsync(List<IProductModel> dtos)
-        {
-            return await _productRepository.BulkInsertProductsAsync(dtos);
-        }
-
         public async Task<List<IProductModel>> GetAllAsync(ProductOptionsPagination productOptions)
         {
              return await _productRepository.GetAllAsync(productOptions);
-        }
-
-        public async Task<List<IProductModel>> GetAllSplitQueryAsync(ProductOptionsPagination productOptions)
-        {
-            return await _productRepository.GetAllSplitQueryAsync(productOptions);
         }
 
         public Task<IProductModel> GetByIdAsync(Guid id)

@@ -43,37 +43,6 @@ namespace Api.GRRInnovations.SmartInventory.Controllers
             return new OkObjectResult(response);
         }
 
-        [HttpPost(nameof(BulkInsertProductsAsync))]
-        public async Task<IActionResult> BulkInsertProductsAsync([FromBody] List<WrapperInProduct<ProductModel>> dtos)
-        {
-            var products = new List<IProductModel>();
-
-            foreach (var d in dtos)
-            {
-                var wrapperIn = await d.Result();
-                if (d.SupplierUid != null)
-                {
-                    //var supplier = await _supplierService.GetByIdAsync(d.SupplierUid);
-                    //wrapperIn.Supplier = supplier;
-                }
-                if (d.CategoryUid != null)
-                {
-                    var category = await _categoryService.GetByIdAsync(d.CategoryUid);
-                    wrapperIn.Category = category;
-                }
-
-                wrapperIn.Uid = Guid.NewGuid();
-
-                products.Add(wrapperIn);
-            }
-
-            var model = await _productService.BulkInsertProductsAsync(products);
-
-            var response = await WrapperOutProduct.From(model).ConfigureAwait(false);
-            return new OkObjectResult(response);
-        }
-
-
         [HttpGet]
         public async Task<IActionResult> GetAll(
             [FromQuery] string? name,
@@ -106,42 +75,6 @@ namespace Api.GRRInnovations.SmartInventory.Controllers
             var products = await _productService.GetAllAsync(options);
 
             //todo: mudar para pagination result
-            var response = await WrapperOutProduct.From(products).ConfigureAwait(false);
-            return new OkObjectResult(response);
-        }
-
-        [HttpGet(nameof(GetAllTestLazyLoading))]
-        public async Task<IActionResult> GetAllTestLazyLoading()
-        {
-            var products = await _productService.GetAllAsync(new ProductOptionsPagination()
-            {
-                PageSize = 9999
-            });
-
-            foreach (var product in products)
-            {
-                //select * from category for each product
-                Console.WriteLine($"Category: {product.Category?.Name}");
-            }
-
-            var response = await WrapperOutProduct.From(products).ConfigureAwait(false);
-            return new OkObjectResult(response);
-        }
-
-        [HttpGet(nameof(GetAllTestSplitQuery))]
-        public async Task<IActionResult> GetAllTestSplitQuery()
-        {
-            var products = await _productService.GetAllSplitQueryAsync(new ProductOptionsPagination()
-            {
-                PageSize = 9999
-            });
-
-            foreach (var product in products)
-            {
-                //select * from category for each product
-                Console.WriteLine($"Category: {product.Category?.Name}");
-            }
-
             var response = await WrapperOutProduct.From(products).ConfigureAwait(false);
             return new OkObjectResult(response);
         }

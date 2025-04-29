@@ -62,8 +62,6 @@ namespace Api.GRRInnovations.SmartInventory.Infrastructure
 
                 sqlOptions.CommandTimeout(60);
             });
-            
-            //.UseLazyLoadingProxies();
 
 #if DEBUG
             options.LogTo(Console.WriteLine, LogLevel.Information)

@@ -31,34 +31,11 @@ namespace Api.GRRInnovations.SmartInventory.Infrastructure.Persistence.Repositor
             return productM;
         }
 
-        public async Task<List<IProductModel>> BulkInsertProductsAsync(List<IProductModel> dtos)
-        {
-            //todo: resolver o bug
-            await _context.BulkInsertAsync(dtos, new BulkConfig
-            {
-                SqlBulkCopyOptions =  Microsoft.Data.SqlClient.SqlBulkCopyOptions.Default,
-                BulkCopyTimeout = 200
-            });
-            await _context.SaveChangesAsync().ConfigureAwait(false);
-
-            return dtos;
-        }
-
         public async Task<List<IProductModel>> GetAllAsync(ProductOptionsPagination productOptions)
         {
             return await Query(productOptions).ToListAsync<IProductModel>();
         }
 
-        public async Task<List<IProductModel>> GetAllSplitQueryAsync(ProductOptionsPagination productOptions)
-        {
-            var products = _context.Products
-                    .AsSplitQuery()
-                    .Include(p => p.DbCategory)
-                    .Include(p => p.DbStockEntries)
-                    .Include(p => p.DbStockOutputs);
-
-            return await products.ToListAsync<IProductModel>();
-        }
 
         public async Task<IProductModel> GetByIdAsync(Guid id)
         {
