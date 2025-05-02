@@ -1,4 +1,4 @@
-﻿using Api.GRRInnovations.SmartInventory.Domain.Entities;
+﻿using Api.GRRInnovations.SmartInventory.Domain.Products;
 using Api.GRRInnovations.SmartInventory.Domain.Wrappers.Out;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;

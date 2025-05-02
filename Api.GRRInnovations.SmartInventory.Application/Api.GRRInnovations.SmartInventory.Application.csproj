@@ -14,4 +14,9 @@
     <ProjectReference Include="..\Api.GRRInnovations.SmartInventory.Domain\Api.GRRInnovations.SmartInventory.Domain.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Products\Get\" />
+    <Folder Include="Products\GetById\" />
+  </ItemGroup>
+
 </Project>

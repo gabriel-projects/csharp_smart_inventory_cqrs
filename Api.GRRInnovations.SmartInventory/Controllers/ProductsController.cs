@@ -1,4 +1,4 @@
-﻿using Api.GRRInnovations.SmartInventory.Domain.Entities;
+﻿using Api.GRRInnovations.SmartInventory.Domain.Products;
 using Api.GRRInnovations.SmartInventory.Domain.Wrappers.In;
 using Api.GRRInnovations.SmartInventory.Domain.Wrappers.Out;
 using Api.GRRInnovations.SmartInventory.Interfaces.Entities;

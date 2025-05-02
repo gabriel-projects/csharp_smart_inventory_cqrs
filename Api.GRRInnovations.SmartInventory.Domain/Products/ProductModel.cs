@@ -1,7 +1,8 @@
-﻿using Api.GRRInnovations.SmartInventory.Interfaces.Entities;
+﻿using Api.GRRInnovations.SmartInventory.Domain.Entities;
+using Api.GRRInnovations.SmartInventory.Interfaces.Entities;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 
-namespace Api.GRRInnovations.SmartInventory.Domain.Entities
+namespace Api.GRRInnovations.SmartInventory.Domain.Products
 {
     public class ProductModel : BaseModel, IProductModel
     {
@@ -21,7 +22,7 @@ namespace Api.GRRInnovations.SmartInventory.Domain.Entities
 
                 return _dbCategory;
             }
-            set 
+            set
             {
                 _dbCategory = value;
             }

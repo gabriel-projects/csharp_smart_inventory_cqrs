@@ -1,4 +1,5 @@
 ﻿using Api.GRRInnovations.SmartInventory.Domain.Entities;
+using Api.GRRInnovations.SmartInventory.Domain.Products;
 using Api.GRRInnovations.SmartInventory.Infrastructure.Persistence.Interceptors;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ValueGeneration;

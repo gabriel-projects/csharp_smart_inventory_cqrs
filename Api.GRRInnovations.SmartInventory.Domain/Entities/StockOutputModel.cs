@@ -1,4 +1,5 @@
-﻿using Api.GRRInnovations.SmartInventory.Interfaces.Entities;
+﻿using Api.GRRInnovations.SmartInventory.Domain.Products;
+using Api.GRRInnovations.SmartInventory.Interfaces.Entities;
 
 namespace Api.GRRInnovations.SmartInventory.Domain.Entities
 {
