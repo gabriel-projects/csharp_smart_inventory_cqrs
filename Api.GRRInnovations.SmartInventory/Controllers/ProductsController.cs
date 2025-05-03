@@ -1,11 +1,19 @@
-﻿using Api.GRRInnovations.SmartInventory.Domain.Products;
+﻿using Api.GRRInnovations.SmartInventory.Domain.Abstractions;
+using Api.GRRInnovations.SmartInventory.Domain.Products;
 using Api.GRRInnovations.SmartInventory.Domain.Wrappers.In;
 using Api.GRRInnovations.SmartInventory.Domain.Wrappers.Out;
 using Api.GRRInnovations.SmartInventory.Interfaces.Entities;
 using Api.GRRInnovations.SmartInventory.Interfaces.Repositories;
 using Api.GRRInnovations.SmartInventory.Interfaces.Services;
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Options;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
+using System.Reflection;
+using System.Threading;
+using Api.GRRInnovations.SmartInventory.Application.Products.Create;
+using Api.GRRInnovations.SmartInventory.Extensions;
+using Api.GRRInnovations.SmartInventory.Infrastructure;
+using Api.GRRInnovations.SmartInventory.Application.Products.Get;
 
 namespace Api.GRRInnovations.SmartInventory.Controllers
 {
@@ -15,32 +23,20 @@ namespace Api.GRRInnovations.SmartInventory.Controllers
     {
         private readonly IProductService _productService;
         private readonly ICategoryService _categoryService;
+        private readonly ISender _sender;
 
-        public ProductsController(IProductService productService, ICategoryService categoryService)
+        public ProductsController(IProductService productService, ICategoryService categoryService, ISender sender)
         {
             _productService = productService;
             _categoryService = categoryService;
+            _sender = sender;
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create([FromBody] WrapperInProduct<ProductModel> dto)
+        public async Task<IResult> Create([FromBody] ProductCommand<ProductModel> command)
         {
-            var wrapperIn = await dto.Result();
-
-            if (dto.SupplierUid != null)
-            {
-            }
-
-            if (dto.CategoryUid != null)
-            {
-                var category = await _categoryService.GetByIdAsync(dto.CategoryUid);
-                wrapperIn.Category = category;
-            }
-
-            var model = await _productService.CreateAsync(wrapperIn);
-
-            var response = await WrapperOutProduct.From(model).ConfigureAwait(false);
-            return new OkObjectResult(response);
+            Result<CreateProductResponse> result = await _sender.Send(command);
+            return result.Match(Results.Ok, CustomResults.Problem);
         }
 
         [HttpGet]
@@ -75,7 +71,7 @@ namespace Api.GRRInnovations.SmartInventory.Controllers
             var products = await _productService.GetAllAsync(options);
 
             //todo: mudar para pagination result
-            var response = await WrapperOutProduct.From(products).ConfigureAwait(false);
+            var response = await ProductResponse.From(products).ConfigureAwait(false);
             return new OkObjectResult(response);
         }
 
@@ -84,7 +80,7 @@ namespace Api.GRRInnovations.SmartInventory.Controllers
         {
             var product = await _productService.GetByIdAsync(id);
 
-            var response = await WrapperOutProduct.From(product).ConfigureAwait(false);
+            var response = await ProductResponse.From(product).ConfigureAwait(false);
             return new OkObjectResult(response);
         }
 

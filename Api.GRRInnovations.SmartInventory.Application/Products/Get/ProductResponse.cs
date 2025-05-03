@@ -1,4 +1,5 @@
-﻿using Api.GRRInnovations.SmartInventory.Interfaces.Entities;
+﻿using Api.GRRInnovations.SmartInventory.Domain.Wrappers;
+using Api.GRRInnovations.SmartInventory.Interfaces.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -6,13 +7,13 @@ using System.Text;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
-namespace Api.GRRInnovations.SmartInventory.Domain.Wrappers.Out
+namespace Api.GRRInnovations.SmartInventory.Application.Products.Get
 {
-    public class WrapperOutProduct : WrapperBase<IProductModel>
+    public class ProductResponse : WrapperBase<IProductModel>
     {
-        public WrapperOutProduct() : base(null) { }
+        public ProductResponse() : base(null) { }
 
-        public WrapperOutProduct(IProductModel data) : base(data)
+        public ProductResponse(IProductModel data) : base(data)
         {
 
         }
@@ -49,17 +50,17 @@ namespace Api.GRRInnovations.SmartInventory.Domain.Wrappers.Out
 
         //TODO: INCLUDE RETURN CETEGORY AND SUPPLIER
 
-        public new static async Task<WrapperOutProduct> From(IProductModel model)
+        public new static async Task<ProductResponse> From(IProductModel model)
         {
-            var wrapper = new WrapperOutProduct();
+            var wrapper = new ProductResponse();
             await wrapper.Populate(model).ConfigureAwait(false);
 
             return wrapper;
         }
 
-        public new static async Task<List<WrapperOutProduct>> From(List<IProductModel> models)
+        public new static async Task<List<ProductResponse>> From(List<IProductModel> models)
         {
-            var result = new List<WrapperOutProduct>();
+            var result = new List<ProductResponse>();
 
             foreach (var model in models)
             {

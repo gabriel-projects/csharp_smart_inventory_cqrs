@@ -11,10 +11,10 @@ namespace Api.GRRInnovations.SmartInventory.Domain.Wrappers
         {
             var result = base.CreateContract(type);
 
-            if (type == typeof(WrapperOutProduct))
-            {
-                result.DefaultCreator = () => new WrapperOutProduct(new ProductModel());
-            }
+            //if (type == typeof(WrapperOutProduct))
+            //{
+            //    result.DefaultCreator = () => new WrapperOutProduct(new ProductModel());
+            //}
 
             return result;
         }

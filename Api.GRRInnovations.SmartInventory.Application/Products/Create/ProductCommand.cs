@@ -1,4 +1,5 @@
 ﻿using Api.GRRInnovations.SmartInventory.Domain.Wrappers;
+using Api.GRRInnovations.SmartInventory.Domain.Wrappers.Out;
 using Api.GRRInnovations.SmartInventory.Interfaces.Entities;
 using Application.Abstractions.Messaging;
 using System;
@@ -10,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace Api.GRRInnovations.SmartInventory.Application.Products.Create
 {
-    public class WrapperInProduct<TProduct> : WrapperBase<TProduct, WrapperInProduct<TProduct>>, ICommand<Guid>
+    public class ProductCommand<TProduct> : WrapperBase<TProduct, ProductCommand<TProduct>>, ICommand<CreateProductResponse>
         where TProduct : IProductModel
     {
         [JsonPropertyName("name")]

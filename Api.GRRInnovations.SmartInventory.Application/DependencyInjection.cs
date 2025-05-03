@@ -12,6 +12,14 @@ namespace Api.GRRInnovations.SmartInventory.Application
             services.AddScoped<IProductService, ProductService>();
             services.AddScoped<ICategoryService, CategoryService>();
 
+            services.AddMediatR(config =>
+            {
+                config.RegisterServicesFromAssembly(typeof(DependencyInjection).Assembly);
+
+                //config.AddOpenBehavior(typeof(RequestLoggingPipelineBehavior<,>));
+                //config.AddOpenBehavior(typeof(ValidationPipelineBehavior<,>));
+            });
+
             return services;
         }
     }
